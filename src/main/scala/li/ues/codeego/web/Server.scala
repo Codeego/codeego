@@ -13,7 +13,11 @@ import akka.pattern.ask
 import akka.util.Timeout
 import scala.concurrent.duration._
 import spray.routing.directives.PathDirectives
-
+import akka.pattern.ask
+import scala.concurrent.ExecutionContext.Implicits._
+import scala.concurrent.{Future, Promise}
+import spray.json._
+import data.Formats._
 
 trait Service extends HttpService 
   with ServiceHelper
@@ -22,9 +26,19 @@ trait Service extends HttpService
 
   val myRoute = 
     headRouting ~ 
-    //pathPrefix("api") {
-    //  
-    //} ~
+    pathPrefix("count") {
+      get {
+        complete((game.Server.core ? game.Count).mapTo[String])
+      }
+    } ~
+    pathPrefix("online") {
+      get {
+        // ಠ_ಠ
+        onSuccess((game.Server.core ? game.WhoseOnline).mapTo[List[game.User]]) { r =>
+          complete(r.toJson.toString)
+        }
+      }
+    } ~
     tailRouting
 }
 

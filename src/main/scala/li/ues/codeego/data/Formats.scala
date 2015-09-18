@@ -1,4 +1,4 @@
-package li.ues.codeego.data.models
+package li.ues.codeego.data
 
 import spray.json._
 import DefaultJsonProtocol._
@@ -9,6 +9,7 @@ import ContentTypes._
 import scala.language.implicitConversions
 import java.time.format._
 import java.util._
+import li.ues.codeego._
 
 object Formats extends DefaultJsonProtocol with SprayJsonSupport {
   implicit object DateJsonFormat extends RootJsonFormat[Date] {
@@ -24,6 +25,7 @@ object Formats extends DefaultJsonProtocol with SprayJsonSupport {
   implicit val resultErrorFormat = jsonFormat3(ResultError)
   implicit val resultMessageFormat = jsonFormat3(ResultMessage)
   implicit val emptyResultMessageFormat = jsonFormat2(EmptyResult)
+  implicit val userFormat = jsonFormat1(game.User)
   implicit def resultOfFormat[A: JsonFormat] = jsonFormat(ResultOf.apply[A], "result", "errors", "messages")
 
   implicit def sprayJson[T : JsonFormat]

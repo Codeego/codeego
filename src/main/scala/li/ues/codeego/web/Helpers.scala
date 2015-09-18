@@ -6,11 +6,13 @@ import spray.routing._
 import spray.json._
 import li.ues.codeego._
 import web._
-import data.models._
+import data._
 import Formats._
 import com.redis._
 import spray.http._
 import StatusCodes._
+import akka.util.Timeout
+import scala.concurrent.duration._
 
 object Persistence {
   val client = new RedisClient("localhost", 6379)
@@ -30,6 +32,8 @@ object Persistence {
 
 trait ServiceHelper {
   this: HttpService =>
+
+  implicit val timeout = Timeout(1.second) 
 
   def getPath(dir: String) = (new java.io.File(".").getAbsolutePath()) + dir
 

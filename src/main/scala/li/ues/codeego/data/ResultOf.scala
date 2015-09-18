@@ -1,4 +1,4 @@
-package li.ues.codeego.data.models
+package li.ues.codeego.data
 
 case class ResultError(message: String, code: String, field: Option[String])
 case class ResultMessage(message: String, code: String, field: Option[String])

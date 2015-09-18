@@ -5,8 +5,11 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.Await
 import scala.slick.driver.JdbcDriver
 import com.mchange.v2.c3p0.ComboPooledDataSource
+import com.github.tototoshi.slick._
 
-object DbContext extends scala.slick.driver.JdbcDriver.API {
+object Context extends slick.driver.JdbcDriver.API {
+  object JodaMapper extends GenericJodaSupport(JdbcDriver)
+
   // @todo(CRITICAL) redo with application.conf settings for the god sake
   val ds = new ComboPooledDataSource
   ds.setDriverClass("org.postgresql.Driver")
@@ -14,7 +17,7 @@ object DbContext extends scala.slick.driver.JdbcDriver.API {
   ds.setPassword("codeego")
   ds.setJdbcUrl("jdbc:postgresql://localhost/codeego")
 
-  implicit val db = Database.forDataSource(ds) 
+  implicit val db = Database.forDataSource(ds)
 
   def process[R](action: DBIOAction[R, NoStream, Nothing]): R = {
     var execution = db.run(action)

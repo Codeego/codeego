@@ -15,7 +15,7 @@ import scala.concurrent.duration._
 import spray.routing.directives.PathDirectives
 import akka.pattern.ask
 import scala.concurrent.ExecutionContext.Implicits._
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.{Future, Promise, Await}
 import spray.json._
 import data.Formats._
 
@@ -34,9 +34,15 @@ trait Service extends HttpService
     pathPrefix("online") {
       get {
         // ಠ_ಠ
-        onSuccess((game.Server.core ? game.WhoseOnline).mapTo[List[game.User]]) { r =>
-          complete(r.toJson.toString)
-        }
+        complete((game.Server.core ? game.WhoseOnline).mapTo[List[game.User]])
+      }
+    } ~
+    path("user" / Segment) { userId =>
+      //get {
+      //  complete((game.Server.core ? game.WhoIs(userId)).mapTo[game.User])
+      //} ~
+      get {
+        complete((game.Server.core ? game.Kill(userId)).mapTo[String])
       }
     } ~
     tailRouting

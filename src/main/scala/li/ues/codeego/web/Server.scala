@@ -38,12 +38,12 @@ trait Service extends HttpService
       }
     } ~
     path("user" / Segment) { userId =>
-      //get {
-      //  complete((game.Server.core ? game.WhoIs(userId)).mapTo[game.User])
-      //} ~
       get {
-        complete((game.Server.core ? game.Kill(userId)).mapTo[String])
-      }
+        complete((game.Server.core ? game.WhoIs(userId)).mapTo[game.User])
+      }// ~
+      //get {
+      //  complete((game.Server.core ? game.Kill(userId)).mapTo[String])
+      //}
     } ~
     tailRouting
 }

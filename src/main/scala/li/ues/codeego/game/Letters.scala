@@ -11,6 +11,7 @@ case object WhoseOnline
 case object Whoami
 case object ProcessStats
 case object Die
+case object Ping
 
 case class User(name: String)
 case class UserSigned(user: ActorRef)

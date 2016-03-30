@@ -14,7 +14,7 @@ object Context extends slick.driver.JdbcDriver.API {
   val ds = new ComboPooledDataSource
   ds.setDriverClass("org.postgresql.Driver")
   ds.setUser("codeego")
-  ds.setPassword("codeego")
+  ds.setPassword("123456")
   ds.setJdbcUrl("jdbc:postgresql://localhost/codeego")
 
   implicit val db = Database.forDataSource(ds)

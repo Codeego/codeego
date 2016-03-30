@@ -35,7 +35,7 @@ trait ServiceHelper {
 
   implicit val timeout = Timeout(1.second) 
 
-  def getPath(dir: String) = (new java.io.File(".").getAbsolutePath()) + dir
+  def getPath(dir: String) = new java.io.File(".").getAbsolutePath + dir
 
   def path[L <: shapeless.HList](path: PathMatcher[L], route: spray.routing.Route) = {
     PathDirectives.path(path).happly { implicit x => route }

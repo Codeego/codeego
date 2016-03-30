@@ -4,7 +4,9 @@ organization  := "ues.li"
 
 version       := "0.1"
 
-scalaVersion  := "2.11.7"
+scalaVersion  := "2.11.8"
+
+sbtPlugin     := true
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8", "-feature")
 
@@ -31,10 +33,10 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka"   %%  "akka-testkit"      % "2.3.14" % "test"
 )
 
-Revolver.settings
-
-Revolver.reColors := Seq("green")
-
 logBuffered in Test := false
 
 parallelExecution in Test := true
+
+reColors := Seq("blue", "green", "magenta")
+
+Revolver.enableDebugging(port = 5005)
